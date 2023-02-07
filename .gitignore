@@ -27,3 +27,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore database config
+/config/database.yml
+
+# Ignore youtube-dl configuration concern
+/models/concerns/youtube_dl.rb
