@@ -32,4 +32,4 @@
 /config/database.yml
 
 # Ignore youtube-dl configuration concern
-/models/concerns/youtube_dl.rb
+/models/concerns/youtube_dl_config.rb
