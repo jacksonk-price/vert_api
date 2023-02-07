@@ -18,6 +18,8 @@ gem 'colorize'
 
 gem 'youtube-dl.rb'
 
+gem 'stringio'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
