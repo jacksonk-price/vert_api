@@ -30,13 +30,13 @@ class DownloadsController < ApplicationController
         encoded_file = Base64.encode64(file_string)
         Rails.logger.info "The audio has been downloaded successfully".green
         File.delete("public/user_downloads/#{conversion_id}.mp3")
-        render json: { status: '200', message: 'Video successfully converted to audio.', mp3_base: encoded_file }
+        render json: { status: 'success', message: 'Video successfully converted to audio.', mp3_base: encoded_file }
       else
         puts "An error occurred while converting the video."
-        render json: { status: '500', message: 'Something went wrong during conversion. Please try again'}
+        render json: { status: 'error', message: 'Something went wrong during conversion'}
       end
     else
-      render json: { status: '422', message: 'Url is invalid' }
+      render json: { status: 'error', message: 'Url is invalid' }
     end
   end
 end
