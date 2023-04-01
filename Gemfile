@@ -16,9 +16,9 @@ gem 'open-uri'
 
 gem 'colorize'
 
-gem 'youtube-dl.rb'
-
 gem 'stringio'
+
+gem 'streamio-ffmpeg'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

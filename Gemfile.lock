@@ -69,9 +69,6 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
-    climate_control (0.2.0)
-    cocaine (0.6.0)
-      terrapin (= 0.6.0)
     colorize (0.8.1)
     concurrent-ruby (1.2.0)
     crass (1.0.6)
@@ -100,6 +97,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.17.0)
     msgpack (1.6.0)
+    multi_json (1.15.0)
     mysql2 (0.5.5)
     net-imap (0.3.4)
       date
@@ -154,9 +152,9 @@ GEM
     rake (13.0.6)
     reline (0.3.2)
       io-console (~> 0.5)
+    streamio-ffmpeg (3.0.2)
+      multi_json (~> 1.8)
     stringio (0.0.2)
-    terrapin (0.6.0)
-      climate_control (>= 0.0.3, < 1.0)
     thor (1.2.1)
     time (0.2.1)
       date
@@ -167,8 +165,6 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    youtube-dl.rb (0.3.1.2016.09.11.1)
-      cocaine (>= 0.5.4)
     zeitwerk (2.6.6)
 
 PLATFORMS
@@ -183,9 +179,9 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.2)
+  streamio-ffmpeg
   stringio
   tzinfo-data
-  youtube-dl.rb
 
 RUBY VERSION
    ruby 3.1.3p185
