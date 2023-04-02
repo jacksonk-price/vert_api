@@ -31,5 +31,5 @@
 # Ignore database config
 /config/database.yml
 
-# Ignore youtube-dl configuration concern
-/models/concerns/youtube_dl_config.rb
+*.iml
+
