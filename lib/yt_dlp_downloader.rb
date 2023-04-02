@@ -12,6 +12,9 @@ class YtDlpDownloader
 
   def get_video_title
     output, status = Open3.capture2(extract_title_command)
+
+    output = 'untitled' unless status.success?
+
     { title: output, status: status }
   end
 
