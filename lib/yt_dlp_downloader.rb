@@ -1,4 +1,5 @@
 class YtDlpDownloader
+  require 'timeout'
   attr_accessor :url, :format
   def initialize(url, format)
     @url = url
@@ -7,6 +8,7 @@ class YtDlpDownloader
 
   def extract_audio
     output, status = Open3.capture2(extract_audio_command)
+
     { audio: output, status: status }
   end
 
