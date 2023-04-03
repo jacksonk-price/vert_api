@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_07_203342) do
-  create_table "downloads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_04_03_020839) do
+  create_table "conversions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "ip"
     t.string "video_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "conversion_id"
-    t.datetime "start_conversion"
-    t.datetime "end_conversion"
+    t.string "status"
+    t.string "status_message"
+    t.datetime "time_start"
+    t.datetime "time_end"
   end
 
 end
