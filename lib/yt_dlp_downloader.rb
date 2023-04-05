@@ -29,5 +29,4 @@ class YtDlpDownloader
   def extract_title_command
     "yt-dlp --get-title #{@url}"
   end
-
 end
