@@ -20,6 +20,8 @@ gem 'stringio'
 
 gem 'streamio-ffmpeg'
 
+gem 'rack-attack'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
