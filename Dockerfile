@@ -18,7 +18,7 @@ ENV BUNDLE_PATH /gems
 RUN bundle install
 
 ENTRYPOINT ["bin/rails"]
-CMD ["s", "-b", "0.0.0.0"]
+CMD ["s", "-b", "0.0.0.0", "production"]
 
 EXPOSE 3000
 
