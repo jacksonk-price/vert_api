@@ -8,7 +8,7 @@ class ConversionsController < ApplicationController
     url = params[:inputurl]
 
     unless valid_url?(url)
-      render json: { status: 'error', message: 'Url is invalid.' }
+      render json: { status: :unprocessable_entity, message: 'Url is invalid.' }
       return
     end
 
@@ -25,7 +25,7 @@ class ConversionsController < ApplicationController
       unless download_result[:status].success?
         message = 'Something went wrong during the audio extraction.'
         conversion.update!(status: 'error', status_message: message)
-        render json: { status: 'error', message: message }
+        render json: { status: :internal_server_error, message: message }
         return
       end
 
@@ -41,12 +41,12 @@ class ConversionsController < ApplicationController
         # encode wav binary to base64
         encoded_wav = Base64.encode64(conversion_result[:wav_output])
 
-        render json: { status: 'success', message: message, video_title: title_result[:title], wav_base64: encoded_wav }
+        render json: { status: :ok, message: message, video_title: title_result[:title], wav_base64: encoded_wav }
       else
         message = 'Something went wrong during conversion.'
         conversion.update!(status: 'error', status_message: message)
 
-        render json: { status: 'error', message: message}
+        render json: { status: :internal_server_error, message: message}
       end
     end
   end
