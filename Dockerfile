@@ -17,7 +17,6 @@ COPY . /app/
 
 ENV BUNDLE_PATH /gems
 RUN bundle install
-RUN EDITOR=nano bin/rails credentials:edit
 
 ENTRYPOINT ["bin/rails"]
 CMD ["s", "-b", "0.0.0.0"]
