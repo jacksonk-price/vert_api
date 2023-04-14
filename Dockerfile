@@ -12,11 +12,12 @@ RUN apt-get update -qq && apt-get install -y  \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /app
-ENV RAILS_ENV=production
+ENV RAILS_ENV production
 COPY . /app/
 
 ENV BUNDLE_PATH /gems
 RUN bundle install
+RUN EDITOR=nano bin/rails credentials:edit
 
 ENTRYPOINT ["bin/rails"]
 CMD ["s", "-b", "0.0.0.0"]
