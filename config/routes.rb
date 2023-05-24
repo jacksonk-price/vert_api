@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  post '/convert', to: 'conversions#convert'
+  post '/create', to: 'conversions#create'
 end

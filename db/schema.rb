@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_020839) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_23_205736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_020839) do
     t.datetime "time_end"
     t.string "status"
     t.string "status_message"
+    t.string "video_title"
   end
 
 end

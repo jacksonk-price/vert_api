@@ -1,53 +1,53 @@
 class ConversionsController < ApplicationController
-  require 'yt_dlp_downloader'
-  require 'ffmpeg_converter'
-
   include YoutubeValidation
 
-  def convert
-    url = params[:inputurl]
+  def create
+    url = params[:input_url]
 
     unless valid_url?(url)
-      render json: { status: :unprocessable_entity, message: 'Url is invalid.' }
+      render json: { message: 'Url is invalid' }, status: :unprocessable_entity
       return
     end
 
-    Conversion.transaction do
-      conversion = Conversion.create!(ip: request.remote_ip, video_url: url)
+    conversion = Conversion.new(ip: request.remote_ip, video_url: url, time_start: Time.now)
+    title_result = conversion.get_video_title
+    conversion.video_title = title_result[:title]
+    extract_result = conversion.extract_video_audio
 
-      conversion.time_start = Time.now
+    unless extract_result[:status].success?
+      message = 'Something went wrong during the audio extraction'
+      conversion.assign_attributes(status: 'error', status_message: message)
+      conversion.save
 
-      # youtube provides m4a audio format.
-      # extract as m4a first
-      ytdlp = YtDlpDownloader.new(url, 'm4a')
-      download_result = ytdlp.extract_audio
+      render_response(conversion)
+      return
+    end
 
-      unless download_result[:status].success?
-        message = 'Something went wrong during the audio extraction.'
-        conversion.update!(status: 'error', status_message: message)
-        render json: { status: :internal_server_error, message: message }
-        return
-      end
+    conversion_result = conversion.convert_to_wav(extract_result[:audio])
 
-      title_result = ytdlp.get_video_title
+    if conversion_result[:status].success?
+      message = 'Video successfully converted to audio'
+      conversion.assign_attributes(status: 'success', status_message: message)
+      conversion.save
+      encoded_wav = Base64.encode64(conversion_result[:wav_output])
 
-      # now convert m4a to wav
-      conversion_result = FfmpegConverter.convert_to_wav(download_result[:audio])
-      conversion.time_end = Time.now
+      render_response(conversion, encoded_wav)
+    else
+      message = 'Something went wrong during conversion'
+      conversion.assign_attributes(status: 'error', status_message: message)
+      conversion.save
 
-      if conversion_result[:status].success?
-        message = 'Video successfully converted to audio.'
-        conversion.update!(status: 'success', status_message: message)
-        # encode wav binary to base64
-        encoded_wav = Base64.encode64(conversion_result[:wav_output])
+      render_response(conversion)
+    end
+  end
 
-        render json: { status: :ok, message: message, video_title: title_result[:title], wav_base64: encoded_wav }
-      else
-        message = 'Something went wrong during conversion.'
-        conversion.update!(status: 'error', status_message: message)
+  private
 
-        render json: { status: :internal_server_error, message: message}
-      end
+  def render_response(conversion, encoded_wav=nil)
+    if encoded_wav.nil?
+      render json: { message: conversion.status_message }, status: :internal_server_error
+    else
+      render json: { message: conversion.status_message, video_title: conversion.video_title, wav_base64: encoded_wav }, status: :ok
     end
   end
 end
