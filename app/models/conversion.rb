@@ -6,27 +6,47 @@ class Conversion < ApplicationRecord
   #     t.string "status"
   #     t.string "status_message"
   #     t.string "video_title"
+  def convert
+    # first, need to extract audio from url using yt-dlp in m4a format because this is what youtube provides
+    extract_output = extract_video_audio
+    self.video_title = extract_video_title
+    if extract_output.nil?
+      assign_attributes(status: 'error', status_message: 'Something went wrong during the audio extraction.', time_end: Time.now)
+      return nil
+    end
+    # with m4a audio and video title extracted, now begin conversion to wav and return
+    conversion_output = convert_to_wav(extract_output)
+    if conversion_output.nil?
+      assign_attributes(status: 'error', status_message: 'Something went wrong during the audio conversion.', time_end: Time.now)
+      nil
+    else
+      assign_attributes(status: 'success', status_message: 'Video successfully converted to audio.', time_end: Time.now)
+      conversion_output
+    end
+  end
+
+  private
+
   def extract_video_audio
     output, status = Open3.capture2(extract_audio_command)
 
-    { audio: output, status: status }
+    status.success? ? output : nil
   end
 
-  def get_video_title
+  def extract_video_title
     output, status = Open3.capture2(extract_title_command)
 
     output = 'untitled' unless status.success?
 
-    { title: output, status: status }
+    output
   end
 
   def convert_to_wav(m4a_data)
     wav_output, status = Open3.capture2('ffmpeg', '-i', 'pipe:0', '-f', 'wav', 'pipe:1', stdin_data: m4a_data)
 
-    { wav_output: wav_output, status: status }
+    status.success? ? wav_output : nil
   end
 
-  private
 
   def extract_audio_command
     "yt-dlp -f 'bestaudio[ext=m4a]' --no-continue -o - #{video_url}"
