@@ -3,7 +3,7 @@
 ### System Dependencies
 [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
-[ffmpeg](https://ffmpeg.org/](https://github.com/FFmpeg/FFmpeg)
+[ffmpeg](https://github.com/FFmpeg/FFmpeg)
 
 ### Begin a new conversion
 
