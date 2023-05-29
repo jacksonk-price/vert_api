@@ -16,7 +16,7 @@
 
   **Required:**
  
-   `input_url=[your_youtube_url]`
+   `{ input_url: [your_youtube_url] }`
 
 * **Success Response:**
 
