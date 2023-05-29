@@ -32,6 +32,10 @@
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ message : "Something went wrong during the audio conversion." }`
+    
+  OR
+  
+  * **Code:** 429 TOO MANY REQUESTS <br />
 
 * **Sample Call:**
 
