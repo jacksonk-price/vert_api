@@ -1,5 +1,10 @@
 # VERT
 
+### System Dependencies
+[yt-dlp](https://github.com/yt-dlp/yt-dlp)
+
+[ffmpeg](https://ffmpeg.org/)
+
 ### Begin a new conversion
 
   Returns base64 string containing your wav audio.
