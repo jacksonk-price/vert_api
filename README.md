@@ -33,15 +33,11 @@
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ message : "Something went wrong during the audio extraction." }`
 
-  OR
-
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ message : "Something went wrong during the audio conversion." }`
     
   * **Code:** 422 UNPROCESSABLE ENTITY <br />
     **Content:** `{ message : "URL is invalid" }`
-    
-  OR
   
   * **Code:** 429 TOO MANY REQUESTS <br />
 
