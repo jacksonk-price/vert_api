@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  post '/create', to: 'conversions#create'
+  post '/conversion/create', to: 'conversions#create'
 end
