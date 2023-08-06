@@ -1,6 +1,12 @@
 FROM ruby:3.1.3
 
 RUN apt-get update -qq && apt-get install -y  \
+    build-essential \
+    libvips \
+    bash \
+    npm \
+    yarn \
+    bash-completion \
     postgresql-client \
     libxml2-dev \
     libxslt-dev \
@@ -11,15 +17,24 @@ RUN apt-get update -qq && apt-get install -y  \
     && chmod a+rx /usr/local/bin/yt-dlp \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-WORKDIR /app
-ENV RAILS_ENV production
-COPY . /app/
+# Rails app lives here
+WORKDIR /rails
 
-ENV BUNDLE_PATH /gems
+# Set production environment
+ENV RAILS_LOG_TO_STDOUT="1" \
+    RAILS_SERVE_STATIC_FILES="true" \
+    RAILS_ENV="production" \
+    BUNDLE_WITHOUT="development"
+
+# Install application gems
+COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-ENTRYPOINT ["bin/rails"]
-EXPOSE 1000
+# Copy application code
+COPY . .
 
-CMD ["s", "-b", "0.0.0.0"]
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+EXPOSE 3000
+CMD ["./bin/rails", "server"]
 
