@@ -1,11 +1,4 @@
 class Conversion < ApplicationRecord
-  #     t.string "ip"
-  #     t.string "video_url"
-  #     t.datetime "time_start"
-  #     t.datetime "time_end"
-  #     t.string "status"
-  #     t.string "status_message"
-  #     t.string "video_title"
   def convert
     extract_output = extract_video_audio
     self.video_title = extract_video_title
