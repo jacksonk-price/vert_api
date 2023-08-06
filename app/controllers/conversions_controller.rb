@@ -1,14 +1,13 @@
 class ConversionsController < ApplicationController
   before_action :validate_url
+
   def create
     url = conversion_params[:input_url]
     conversion = Conversion.new(ip: request.remote_ip, video_url: url, time_start: Time.now)
 
     conversion_output = conversion.convert
 
-    conversion.save
-
-    if conversion_output.nil?
+    if conversion.status == 'error'
       render_response(conversion)
     else
       encoded_wav = Base64.encode64(conversion_output)
@@ -34,6 +33,6 @@ class ConversionsController < ApplicationController
   end
 
   def conversion_params
-    params.permit(:input_url)
+    params.require(:conversion).permit(:input_url)
   end
 end
