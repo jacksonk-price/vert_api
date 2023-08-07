@@ -30,9 +30,10 @@ ENV RAILS_LOG_TO_STDOUT="1" \
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# Copy application code
+COPY . .
+
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
