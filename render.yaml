@@ -1,0 +1,22 @@
+databases:
+  - name: vert_database
+    databaseName: vert_db
+    user: vert_user
+
+services:
+  - type: web
+    name: vert_api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    repo: https://github.com/jacksonk-price/vert_api
+    region: oregon
+    branch: main
+    plan: free
+    dockerCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: vert_db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
