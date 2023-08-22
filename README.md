@@ -44,7 +44,7 @@
 * **Sample Call:**
 
   ```javascript
-    fetch('http://api.vert.com/conversion/create', {
+    fetch('http://vert-api.onrender.com/conversion/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ input_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" })
